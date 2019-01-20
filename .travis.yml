@@ -1,0 +1,20 @@
+services:
+- docker
+install:
+- docker build -t affinity .
+- docker run -d --name affinity affinity
+before_install:
+- pip install --user awscli
+- export PATH=$PATH:$HOME/.local/bin
+- eval $(aws ecr get-login --no-include-email --region us-west-2)
+- aws ssm get-parameters-by-path --region us-west-2 --with-decryption --path "/api/affinity/demo/"
+  | jq -r '.Parameters[] | ([.Name, "\"" + .Value + "\""]) | join("=")' > /tmp/dev.affinity.ini
+- sed -i~ 's#/api/affinity/demo/##' /tmp/dev.affinity.ini
+- mv /tmp/dev.affinity.ini .env
+script:
+- docker exec affinity vendor/bin/phpunit
+- rm .env
+env:
+  global:
+  - secure: FKvDVsv8Un4xJn8J9pkK+aLHXgaacb5zUx3ztPF5Ytn0+qSSY67uwcgb6HoXHI/8Xkv6I2zEIgI9O2dRBMWUBegQU3JrZ0nRNMTtJqgQa7a6MKO/vMSOW0qB2u+KZAgI3wSsbREb4JpZc5HVBJNCCbxMnlAOhv/28OJE5UnEojMtjp2xEnxUuqZ3NGqnztCUXTVM9AWYnRFZBpQ8BRMj2o+OBFVVAVdgCaRatrhsU8xI7LGpc6C1s1gZ4diIq/8cUaHwUHYeOsfMo+JAF9FXdaheCzBLpaHPJ/Brr+ZAT6nJxIfCwqymm47LJB9f899ZbmP6YWZqoxe4vHKjCXyM93jJ2zC7DplFapqiuqyjbYuU42PMZB//+2j3Bnk3gRJmQmTcpO4VsgMId77wVKBzONfb5W/50Ybi5M8fKYzWKphYjQ0pfrWDrgco1+grdBH61f3lxFGbrLep1WkEDx0LT/Jle7q6lyTdnzkb/HXBOTvoMdphi3OVKlPTn2TtcO3pAJHIw0tn6Mh/lKIG+3sikgQKJYOTpb4sZTVC19/Ki5WBPlFRZZ9VnfDKw9pgfLcVDHy2J21TBCVA6iWT1K1Q9LgxhZ6VWntl1vf9S14wZ/3wvxFhtVZC4m3IRK5mnpZTonLCxTTWnLer/TzHknlqTuva8Vp2J3C3kiX0w9F7OYA=
+  - secure: cNTghL29DTrAfXThPBLOxcMXbyiARFeLG5KGLKB2bYVhbeZToz+alOPo5otiA09YGE1jX91eULiY/ukKgd4pupdZOxqjGIx2MEelIaWpSlm5qNTUn8ylrw0juMMJli9ErzH+HzDl318D0NCyghH1I+/8AKgxI8ku+06yHtkbgTSWtbIysOQKIXOyBNzlLcuN3DNAfxGRQVpeh+poLQ3zzv08el6pp8C2QxS6is7MIL1JesoWZXalhGVaBqv/3K2uIYup53QB0CEfkuqwisBcZTtqspMA01iqgk7BOy0qXRlTU2oOAa8+uNfuhEZ8F11IZZWKum5VxtDYuxbhL4d1bRQisSx4ljNJW5p037oIBjDd47TtJpDow4+jWOpDHPRAgID2vrcUIO9WRej+PVb4mL7Z4jXsjGI02y1jIzSkmbevjbv9XRweJoUn1TqK5Ct0HLpDI69cUnTWxa4TstpD8NIcQoE+zlucs3kH7bCz0z5mJ9kSh0MLYG1BGHuclYsdhhXIJ3cIiDZoEdBHSoXux0OrK83cVSiHEUy43VbCQI+Cj/eEFFfQWhZIoDCzk7SU0lpRTDwRyZ3BXav+NT861qAUzuA3jrKOXOTc5ckcsI4Pmn/uXyhjHNA4Tdk7AzETdBFv/amn4VlrMIqeoQ1GDv/a75yz4++RaV+JohjalNk=
