@@ -4,14 +4,14 @@ install:
 - docker build -t affinity .
 - docker run -d --name affinity affinity
 before_install:
-- pip install --user awscli
+#- pip install --user awscli
 - ./credentials.sh
-- export PATH=$PATH:$HOME/.local/bin
-- eval $(aws ecr get-login --no-include-email --region us-west-2)
-- aws ssm get-parameters-by-path --region us-west-2 --with-decryption --path "/api/affinity/demo/"
+#- export PATH=$PATH:$HOME/.local/bin
+#- eval $(aws ecr get-login --no-include-email --region us-west-2)
+#- aws ssm get-parameters-by-path --region us-west-2 --with-decryption --path "/api/affinity/demo/"
   | jq -r '.Parameters[] | ([.Name, "\"" + .Value + "\""]) | join("=")' > /tmp/dev.affinity.ini
-- sed -i~ 's#/api/affinity/demo/##' /tmp/dev.affinity.ini
-- mv /tmp/dev.affinity.ini .env
+#- sed -i~ 's#/api/affinity/demo/##' /tmp/dev.affinity.ini
+#- mv /tmp/dev.affinity.ini .env
 script:
 - docker exec affinity vendor/bin/phpunit
 - rm .env
