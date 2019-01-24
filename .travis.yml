@@ -5,7 +5,7 @@ before_install:
   -in .env.enc -out .env -d
 #- "./credentials.sh"
 #- aws ssm get-parameters-by-path --region us-west-2 --with-decryption --path "/api/affinity/demo/"
-  | jq -r '.Parameters[] | ([.Name, "\"" + .Value + "\""]) | join("=")' > /tmp/dev.affinity.ini
+#  | jq -r '.Parameters[] | ([.Name, "\"" + .Value + "\""]) | join("=")' > /tmp/dev.affinity.ini
 script:
 #- docker exec affinity vendor/bin/phpunit
 - vendor/bin/phpunit
