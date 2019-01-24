@@ -1,4 +1,4 @@
-#!/bin/bash/env bash
+#!/usr/bin/env bash
 
 mkdir -p ~/.aws
 
