@@ -6,8 +6,9 @@ before_install:
 - sudo apt-get install -y jq
 - pip install --user awscli
 - export PATH=$PATH:$HOME/.local/bin
-- ./credentials.sh
-- aws ssm get-parameters-by-path --region us-west-2 --with-decryption --path "/api/affinity/demo/" | jq -r '.Parameters[] | ([.Name, "\"" + .Value + "\""]) | join("=")' > /tmp/demo.affinity.ini
+- "./credentials.sh"
+- aws ssm get-parameters-by-path --region us-west-2 --with-decryption --path "/api/affinity/demo/"
+  | jq -r '.Parameters[] | ([.Name, "\"" + .Value + "\""]) | join("=")' > /tmp/demo.affinity.ini
 - sed -i~ 's#/api/affinity/demo/##' /tmp/demo.affinity.ini
 - mv /tmp/demo.affinity.ini .env
 - docker build -t affinity .
@@ -17,5 +18,4 @@ script:
 - rm .env
 env:
   global:
-  - secure: dmSihgq15eJ52IOBJRas/JlMT27tzKOeLkq9yIXmhprOEh5A5uYlf2ItbWXxnSmt1E03npCzdAndp6czAqqqK9ZCWPOC0zqPGsn8hco2Xk0SbFsJqAUa4hRMaxsEGkZrB6Ag8cVA+0cP4+TuOECTS39YgaTvsID3QnxtHcd+RfwInbNZ+J6+pyShFwfcOen28x/c3i4+ge/F2VEkf37bgpfDO4OeaEKjdK8NBVZOyh0Gu4au8WqwV8sIw4/9MsVNjD5QaTpspddVaNfcPdofeHbPjztjbQcgxCdUdTIRhbMsgL42qkO6zNqigIAxyoCTIrMPdRifgknJYcK5WmK7/4lsqAdievQSnruMecqNf+eG0cPqsAVCZ3us9bgOtB0Ba6Is8Vpog4DiUx/rJE3FJG1Cvquue6slmbIUBe7qUnM6BKnk5S1vcwWR1/+QHxv8p/kujQagge5rRt2BQtrz1CjcE9/ZYJ+rSIebJJB+7yy0SQt5f0Rfr6QRzZ7b67gKyyz/H/OA+evP1d2uSIo08VUU46NmBaeHahsYKE5gJzaiopefKAC324ABir77iET8xOd7rv0O+P1+iN82ptDqV7KAhwXhqyh3bfJFF0dFTyOK34xM+aKxjb6+sqx1szp65udDtPEV6xZUSPUkdwWqAE4GK7dDhMB06NI4Ojmj81k=
-  - secure: WwCTwqaeluOc9pYGiW0+v0FrORxnWEChbhHSFQrIENwQgWb8FaKYpgnx4zlK2cJ5qsYPXdAIs6xL8CpSBj5zBnGZIAQ1zMf2VABZCJ2Oa6x8Z26C6J7g57m2YY7v2lCE53Ksgx0WiOM7laI4jyhJS/zpYHlNuh2s2EFqXlbUSx+iYto2vpDK+heabRozvFB9lPCRV2uuQkFZnmtCSfqg51zXC8B2UaPxCZDqVj3SRjHHTlO4HAQG4tD0DzqjXFhKjur20qDrZbhYuLG7TjcIdWNAi5fhqNCJPfkK9ppvzoLtGfrWyffJoC+aP6+bVeIDNsPU9iUbp4lAgO4sraYJOzOexgKXmXfd3a+XcSrsXqxr9dP5Wbm/StHHC8A0E89YdIhusqCDQVmuqgZ0Et9dp2J9ucqLGUb5A2G1TOnveFEZOt8pBMbACC8i62jzS+WXvGHILGZoRpsBNHDOKylZesic+6aelk4gnzJ832IeBWWw5r6UBPGsnZcsCOJZFaPPG6+H197DZXGHYon96BaHfBw8XPEPDfl8RpiNLkNvqxj1GdFIZtNK4ios640auooT0HeI6/5ohubsQQVkS1sqlKmhRRT2L35WtJwmPTETNSXurdg5dTx3wdMPT+s9G/5eRSPwyc1q70/io6zQKOZh+JEPRU+BSRig1NCUIyMkjI0=
+    secure: g2JjRN5DUkTp/fMi3zlBiBSmtbePrrSrsbDdiHkPHfPQLF4E2t7bDsZdcekwd5k7MpPP2kGCMs4XCtY8OMFxU6NXCqmhffeX68G5Uq61YwXORnq2FO08DxBq7XjCRYKn9lni/EjEmxQlXuPsfrtNxwNQd23niPLeWhyx3DtYHi59Vp80LVhugT3hd5ntporrux23f9cdKuITInh5nHIM1RiIkCqZr7+vkn4O35X/XvGT1AnTg0LLWwb2+2MKXL+KJBLSfXfiFFag3ENbXTAWnx++sMRtVJZp29xYu9kMH3tVR90KZGle8Srsu4CzeQtvck/LrLpdwK393LwqDXOj4XYT9OdxX579KG9JdeTVMTP7ARkqBgz/FrjQH5T3G23/9Vt0jVHj2hQO89B3HEGFePzQtfteTaJCSvPJ5tTPQmxmziXRU2zAHvQIwLrFwj5+fvn7JCDUU5ixdSDFxEqH/navyM9F34xj4QnL5NltW1ZCGxGDlOrQ2MeZrFigi5/aHY97DmusmcLCXa3JQn91VJGIPREExzhYGPjnr+ObDNOebgGuUcFGHRIoCu7UochVY7UR0VSuAaZfF0YyyREOgYSjEO4GMLk7UhbxsXXXM01uljvc4x6oj7ch97tMR7DifsLJFDPeltlIVX1iAiPHbmIAHJbeRNpcEBApTG8vmbo=
