@@ -1,21 +1,12 @@
 services:
 - docker
-install:
-- docker build -t affinity .
-- docker run -d --name affinity affinity
 before_install:
-#- pip install --user awscli
-- ./credentials.sh
-#- export PATH=$PATH:$HOME/.local/bin
-#- eval $(aws ecr get-login --no-include-email --region us-west-2)
+- openssl aes-256-cbc -K $encrypted_3ec2f4b136b5_key -iv $encrypted_3ec2f4b136b5_iv
+  -in .env.enc -out .env -d
+#- "./credentials.sh"
 #- aws ssm get-parameters-by-path --region us-west-2 --with-decryption --path "/api/affinity/demo/"
   | jq -r '.Parameters[] | ([.Name, "\"" + .Value + "\""]) | join("=")' > /tmp/dev.affinity.ini
-#- sed -i~ 's#/api/affinity/demo/##' /tmp/dev.affinity.ini
-#- mv /tmp/dev.affinity.ini .env
 script:
-- docker exec affinity vendor/bin/phpunit
+#- docker exec affinity vendor/bin/phpunit
+- vendor/bin/phpunit
 - rm .env
-env:
-  global:
-  - secure: L4RMnsum80JtAQ3rCROOUdvNYgOLsX1YHM/uy9d0GEgilu9qWw45XZPJ867xIlwZWBnzPYmDCE/THQx7tbqio+oBRrvgVMynYymxHGikGrrUKxW18aOuP0H16vLfFrwsoJcoKCohm3e+NZiw+D3Nb7KDAXY/bQb1D5corEyXMfhQcgqn3YQKSd43iU7shMoKX0rm55nV9NYmyqWyI8ZYK30+2OmYAP9fur6GV8NJj3YdMR0rouh5oA4EWo7l9QmvTIKQRBiv07CnrfnURabzmHtKkGv/kxwUTsPVlQLWuIEq7xdcilmQSOx1R5z9LVzCnxgeA/x0jcjMXjMx7dHlIa0vLs9CLD0g9TyDVZ7D/qwJuWTYDWBrdDJusbJXXeR5uW9bqCcqUU5/6RFBqPNM1Je7yNZd9m7yhgkTxuTmhDpYMZ4+lpMEDtzm/Oe6KaTcjk4eoM9RNIsjTud3DHzJblAWSf5Wl2ocV8qD6fB8j0ZC+34OCjka1lkA2L6tGH5kvgL/PG4MIqUaqOaJMATwIXTaEBVbSkcqN2rhWyl1jZaOAWcck12utYfnyLowIkmQxY2li2upjm+H8eyqaGMIRZYGW+P7kjU6qjqfcegwHEYJG1fvS7InCsTn2ZNg2XnWrl+t7Ywgc+vfIO4L4r0Ba2PWVMwY++pbCQLtyLEnsho=
-  - secure: XPRn9tsD3x/Ar2TigKaYs9FsB5NWfxnItWpFHBBGtzZpGYphdfgl2zmrSrvxY/m0wx0A7CSJzuI4iQBk3dJQkJgiTWDBsQRDx6IMQjExeuxAz9gJWVHxQXQRgxtBd4hWYgmdDPLPLRhQoJCS6c7Q+sP6/8xgb5bzO1HUObcPmupdTXU7oDjRywy++g0QZZhZsQ+iAGebDZXJOa5htGeORZnVBhTW2Wro4O9ot8mkDxY+EqELboWNW9JzwkUEqlWJedj2MJLv8mzkfvWJuUi/FDXXGHdpAyuUUW+8LTFI6lgkV0Ckbhw4U6LdJqaf/ROmjoG742rKI6L9UEhuXaafCle9mAOZKyvLOwiURep0Jiq8U+LoJBTi878kFJRE2s2fGCs9/VuM7nlfXCLdY/utF1JxejbLAyJd2RM1wgpn8C0gHFOMrBIyJTey7wbRXxk6XKeVnaU//34MRxq3uFLAGNn3TBCfkU7FoeAwBYvtHA0vMhDIGTJlamL7fi30vVNvrb8XhMUzmFi4qiXUNTfj0aRZPs4beIpR3w6pUSrA3dZeVYMhmwQyZakg+P8ePsIZPvcfKrytvBpxJyw0OcTiKg4/WO6s3l5dCPkiFjRKs3GQt3hpMbHcrQp+6zDjYxN8dFw22Hp1tyrbFok8ijrP8j0dqI3GluunVjrWDUiZ+jQ=
