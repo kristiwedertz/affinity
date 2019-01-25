@@ -1,0 +1,7 @@
+[template]
+src = "dotenv.tmpl"
+dest = "/target/.env"
+prefix = "/api/affinity/demo"
+keys = [
+    "/",
+]

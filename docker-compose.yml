@@ -1,18 +1,20 @@
-version: '3'
+version: "3.2"
 
 services:
-  webserver:
-    container_name: affinity
-    image: csunmetalab/api:latest
-    ports:
-      - '8080:80'
+  confd:
+    build: ./confd
     volumes:
-      - .:/var/www/html
+      - ./confd/target:/target
+      - ~/.aws:/root/.aws
+    environment:
+      - AWS_PROFILE
 
-  composer:
-    restart: 'no'
-    container_name: affinity_composer
-    image: composer:latest
-    command: install
+  affinity:
+    build: .
+    ports:
+      - "8080:80"
     volumes:
-      - .:/app/
+      - type: bind
+        source: ./confd/target/.env
+        target: /var/www/.env
+        read_only: true
