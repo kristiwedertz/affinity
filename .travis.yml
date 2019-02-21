@@ -4,6 +4,7 @@ before_script:
 - docker --version
 - ./aws-creds.sh
 - chmod 0600 ~/.aws/credentials
+- touch confd/target/.env
 - docker-compose up --build
 script:
 - ls -la target/
