@@ -13,6 +13,8 @@ services:
     build: .
     ports:
       - "8080:80"
+    depends_on: 
+      - confd
     volumes:
       - type: bind
         source: ./confd/target/.env
