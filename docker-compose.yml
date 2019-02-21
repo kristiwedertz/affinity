@@ -5,7 +5,7 @@ services:
     build: ./confd
     volumes:
       - ./confd/target:/target
-      - ~/.aws:/root/.aws
+      - $HOME/.aws:/root/.aws
     environment:
       - AWS_PROFILE
 

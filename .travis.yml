@@ -1,21 +1,19 @@
 services:
 - docker
 before_script:
-- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-- sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-- sudo apt-get update
-- sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce 
-- docker -v
-- docker-compose up -d --build
-script:
-- docker container ps | grep -q affinity_affinity_1
-- docker exec affinity_affinity_1 bash -c 'pwd && ls -la && vendor/bin/phpunit'
-after_success:
 - docker --version
+- ./aws-creds.sh
+- chmod 0600 ~/.aws/credentials
+- docker-compose up --build
+script:
+- ls -la target/
+- docker container ps | grep -q affinity_affinity_1
+- docker exec affinity_affinity_1 bash -c 'ls -la /var/www/ && vendor/bin/phpunit'
+after_success:
 - pip install --user awscli
 - export PATH=$PATH:$HOME/.local/bin
-- eval $(aws ecr get-login --no-include-email --region us-west-2)
-- docker build -t affinity .
+  #- eval $(aws ecr get-login --no-include-email --region us-west-2)
+  #- docker build -t affinity .
 env:
   global:
   - secure: AtFdVHdhS+ZuGQjy6+AkycqA4pmMX3MoFQXuPkLysAZv6tVX8hIgafcISyNoGDsCGCdFgtQCxGLT6HWIAWrGUNWEHl3AAh2xIfk47k5FXjID0PCuXRMMTuboJ6/28CEiGGKxfMVYuDXdbGK0y2iZYCGmVGHBdwJeVdIDtL2S48IsxiwqlSutveeZG7sg+LklPj+H4iJI7MSfVguM3FfiFoLEv28NrdgK0pEiv2fEfXvZsRHj9KHJ4db4TpPYbap5AKzrwnOAJaHQ5u/vIEF5yLDZ18djCZUjEvdhOldxs3B73WNqTRUBcef3mDayUhwJkbgCQUHUlzFvz1KDtUZF0NEpQulgSqcXFWziwy5LXh8VlOvE0ZS8QpMzT3MUBvRw7a1XH81W4ZYNBhUTP2Tio7fBwUnsMOo8NVkkFmk2H4XrnDVAd64Tyh3dgllHDNZZ3ggRYQk3Zn9hrPlG+P3JTaIkXCM77oJb/fCMQPdH+dpDiZ/pdG3LVkZgKeZt2b3UfD6gL8mmFnXVbvbXB5VGT95MofgPxmPOYk31hvu1gQfZg/3y0Dn84j8dxZKh/1d6cVFP1cmYou6OSLTKp4INft509xbLxZydZ9qL9NVACOJT/fVLsZnLTJZAXosNHa+N8VR7iKbqknKpGMdyYN9JHCOK2fNhnxGdGushhMSbXzc=
