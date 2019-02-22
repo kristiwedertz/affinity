@@ -19,11 +19,11 @@ after_success:
 - export PATH=$PATH:$HOME/.local/bin
 - eval $(aws ecr get-login --no-include-email --region us-west-2)
 - docker build -t affinity .
-- docker tag affinity:$DATE 919531742413.dkr.ecr.us-west-2.amazonaws.com/affinity:$DATE
-- docker push 919531742413.dkr.ecr.us-west-2.amazonaws.com/affinity:$DATE
+- docker tag affinity:${DATE} 919531742413.dkr.ecr.us-west-2.amazonaws.com/affinity:${DATE}
+- docker push 919531742413.dkr.ecr.us-west-2.amazonaws.com/affinity:${DATE}
 env:
   global:
-  - DATE=$(date +"%Y%m%d")
+  - DATE=$(date +"%Y%m%d%H%M%S")
   - AWS_REGION=us-west-2
   - secure: aGLe/69AYZF5cOBYilBMVGLvVaBxNoxgQt6cQxRUMDDDOpKABV4FnNzEelEVabx5SYr8gnAxHynpFiGwK+mf94k0/D7MwbIO1uJpL3zvvrNACL7Zf2zn/Y6PKdLsHdd70/AT3AzAjispdYkmO/MsXAq8eozcaUoVmeXRsrXL0sHvqoJcb4C4b1/Muc1fQ0hRKs1dYweSa6FLMtFVhRV0lbob6SjAs7rHM7CLpf816vmpPsmdBTv8vffV2/CA/+4EbeqyB0VMT63aPK8vJ/61FakjBSDkIur8bfoRETcJn6rqFVWDI2U8VPRw6aoA4utm8KO9mS/k8lxKrTAv3j3ciB0L+NWAG41sVFW6l3QfQaHrA5TOVeWc9l1JkfTf0aW4DrH7vC9cX2yPdd/44Ux8YSgGb3VQGyVTe4iw2SoGbs862oCehxh05fBi5k+m0JJvRawbgnsUF+FKMI2qsv6YxiWpuIMF+ntVvjdWwT0XgkWZx2RFC1VWDxP/A3xLK/UqERqJfPA/9pg+iYX7BGUjCVgT3T96rgol/OFfOePvC5rVlIncMLh2b6zOjDfL5J/faZxkH3UnO1rVmJcBVz1Fi5ikyH2lWsyjyhXbbj29vzgw2sbTaC+bHfV2cdNSppls4vidDhK9v0wnaEdtBJPa1ckgEdwU/C1NCTClXMCMzHc=
   - secure: w5seHA4IQQFeE0BqVSSMvFjnPiDORaplrRfhzX/Ga+hhdyEfSJxLy4SkACUm8tKFp2MkjVYhGo5Jq00aDN+Q+YMa0s2n4QQsWKNGjBe7Q+Z0GZqxURtGP4yd5N02kX92SldJENZ9sG/xOkyGHpLGZOYElE7w/OhQ10PHPs2u93GSOZIyG84u+UrRkRV1Yrdy4G43E/+jFk8qFzoLISk3P40kgw5Xy46yzF0zvS8Y0y8HDDxF2yAAAmafb4vjDQyRM9npBHK0KwLqIGLFBfsHNbwKbnALFekf3allZa9bEASggxrvEJ/I4NsXces2hRghsJaNUredrTD4RghGB6tTdTGxph7+9zYKn2xW1bzqB3QwJ5Euh2ama9vlEdZ98OV5fBynHXVElwY+Pg5F2sLEk9Kh0IfYjHICKoHPFR3Vrf3Vq8yNG/kYLVUpXb6sy9mpfv6u3+uK1gb7xtXg3Kv/1dmWIcud+74MKj0Mrvm80eqGaDYxgnMo5eBWWBXwo6DxuWpFzCMB14/rHFc3jJ7DCAAVq8bp8FMmuU0bgvfONIuaPTzzZ5A4Fp3DutqtURczZpbWg9Fy1BIGJA07u9QI5LH1oDbctTxNB71q6UseM6B9p9ZOj+UKWp2oXNub2SIN449rlRf5pCvQShdiRxAANlq9VTsA3LIvhmgt0+cWW0g=
