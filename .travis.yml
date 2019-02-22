@@ -4,9 +4,10 @@ before_script:
 - docker --version
 - ./aws-creds.sh
 - chmod 0600 ~/.aws/credentials
-- touch confd/target/.env
-- docker-compose up --build
 script:
+- cd confd/
+- docker image build -t confd .
+- docker container run confd
 - ls -la confd/target/
 - docker container ps | grep -q affinity_affinity_1
 - docker exec affinity_affinity_1 bash -c 'ls -la /var/www/ && vendor/bin/phpunit'
