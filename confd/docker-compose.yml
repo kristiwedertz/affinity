@@ -1,0 +1,10 @@
+version: "3.2"
+
+services:
+  confd:
+    build: .
+    volumes:
+      - ./target:/target
+      - $HOME/.aws:/root/.aws
+    environment:
+      - AWS_PROFILE

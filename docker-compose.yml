@@ -1,20 +1,10 @@
 version: "3.2"
 
 services:
-  confd:
-    build: ./confd
-    volumes:
-      - ./confd/target:/target
-      - $HOME/.aws:/root/.aws
-    environment:
-      - AWS_PROFILE
-
   affinity:
     build: .
     ports:
       - "8080:80"
-    depends_on: 
-      - confd
     volumes:
       - type: bind
         source: ./confd/target/.env
