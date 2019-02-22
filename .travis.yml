@@ -18,7 +18,7 @@ after_success:
 - pip install --user awscli
 - export PATH=$PATH:$HOME/.local/bin
 - eval $(aws ecr get-login --no-include-email --region us-west-2)
-- docker build -t affinity .
+- docker build -t affinity:${DATE} .
 - docker tag affinity:${DATE} 919531742413.dkr.ecr.us-west-2.amazonaws.com/affinity:${DATE}
 - docker push 919531742413.dkr.ecr.us-west-2.amazonaws.com/affinity:${DATE}
 env:
