@@ -2,22 +2,25 @@ services:
 - docker
 before_script:
 - docker --version
-- "./aws-creds.sh"
+- ./aws-creds.sh
 - chmod 0600 ~/.aws/credentials
 - cd confd/
 - docker-compose up --build
-- ls -la
 script:
+- file target/.env 
 - cd ../
+- echo $HOME
 - pwd
 - docker-compose up -d --build
 - docker container ps | grep -q affinity_affinity_1
-- docker exec affinity_affinity_1 bash -c 'ls -la /var/www/ && vendor/bin/phpunit'
+- docker exec affinity_affinity_1 bash -c 'vendor/bin/phpunit'
 after_success:
 - pip install --user awscli
 - export PATH=$PATH:$HOME/.local/bin
-  #- eval $(aws ecr get-login --no-include-email --region us-west-2)
-  #- docker build -t affinity .
+- eval $(aws ecr get-login --no-include-email --region us-west-2)
+- docker build -t affinity .
+- docker tag affinity:latest 919531742413.dkr.ecr.us-west-2.amazonaws.com/affinity:latest
+- docker push 919531742413.dkr.ecr.us-west-2.amazonaws.com/affinity:latest
 env:
   global:
   - AWS_REGION=us-west-2
