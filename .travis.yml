@@ -21,6 +21,9 @@ after_success:
 - docker build -t affinity:${DATE} .
 - docker tag affinity:${DATE} 919531742413.dkr.ecr.us-west-2.amazonaws.com/affinity:${DATE}
 - docker push 919531742413.dkr.ecr.us-west-2.amazonaws.com/affinity:${DATE}
+- docker build -t confd:${DATE} confd/. 
+- docker tag confd:${DATE} 919531742413.dkr.ecr.us-west-2.amazonaws.com/confd:${DATE}
+- docker push 919531742413.dkr.ecr.us-west-2.amazonaws.com/confd:${DATE}
 env:
   global:
   - DATE=$(date +"%Y%m%d%H%M%S")
